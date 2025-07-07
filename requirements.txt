@@ -1,0 +1,6 @@
+# 此文件已弃用，请使用 pyproject.toml
+#
+# 安装依赖请使用:
+# uv pip install -e ".[dev]"
+# 或
+# pip install -e ".[dev]"
