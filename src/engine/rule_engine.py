@@ -261,24 +261,28 @@ class RuleEngine:
             可能的动作列表
         """
         possible_actions = []
-
-        # 总是可以过牌
-        possible_actions.append(Action(ActionType.PASS))
-
-        # 如果是自己的回合，可以出牌
         current_player = game_state.get("current_player_id")
         player_id = game_state.get("asking_player_id", current_player)
 
+        # 如果是自己的回合
         if current_player == player_id:
-            # 可以出任何手牌
-            for tile in set(player_hand):  # 使用set避免重复
-                possible_actions.append(Action(ActionType.DISCARD, tile))
+            # 如果手牌超过13张，必须出牌，不能过
+            if len(player_hand) > 13:
+                # 只能出牌或暗杠，不能过
+                for tile in set(player_hand):  # 使用set避免重复
+                    possible_actions.append(Action(ActionType.DISCARD, tile))
 
-            # 检查是否可以暗杠
-            tile_counter = Counter(player_hand)
-            for tile, count in tile_counter.items():
-                if count == 4:
-                    possible_actions.append(Action(ActionType.GANG, tile))
+                # 检查是否可以暗杠
+                tile_counter = Counter(player_hand)
+                for tile, count in tile_counter.items():
+                    if count == 4:
+                        possible_actions.append(Action(ActionType.GANG, tile))
+            else:
+                # 手牌正常时，可以过牌
+                possible_actions.append(Action(ActionType.PASS))
+        else:
+            # 不是自己的回合，总是可以过牌
+            possible_actions.append(Action(ActionType.PASS))
 
         # 检查是否可以碰、明杠、胡
         last_discard = game_state.get("last_discard")

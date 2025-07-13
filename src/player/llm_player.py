@@ -208,8 +208,10 @@ class LLMPlayer:
             action_type = ActionType(action_type_str)
 
             tile = None
-            if "tile" in response and response["tile"]:
-                tile = Tile.from_string(response["tile"])
+            # 支持多种字段名
+            tile_field = response.get("tile") or response.get("discard_tile")
+            if tile_field:
+                tile = Tile.from_string(tile_field)
 
             suit = None
             if "suit" in response and response["suit"]:

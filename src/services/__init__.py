@@ -7,6 +7,7 @@ from .llm_api import (
     MockLLMClient,
     OpenAIClient,
     ClaudeClient,
+    DeepSeekClient,
     create_llm_client,
 )
 
@@ -15,5 +16,6 @@ __all__ = [
     "MockLLMClient",
     "OpenAIClient",
     "ClaudeClient",
+    "DeepSeekClient",
     "create_llm_client",
 ]

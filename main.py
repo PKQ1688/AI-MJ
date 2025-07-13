@@ -16,13 +16,13 @@ async def main():
     parser = argparse.ArgumentParser(description="AI四川麻将游戏")
     parser.add_argument(
         "--llm-type",
-        choices=["mock", "openai", "claude"],
-        default="mock",
+        choices=["mock", "openai", "claude", "deepseek"],
+        default="deepseek",
         help="LLM客户端类型",
     )
     parser.add_argument("--api-key", help="LLM API密钥")
     parser.add_argument("--debug", action="store_true", help="开启调试模式")
-    parser.add_argument("--model", default="gpt-3.5-turbo", help="LLM模型名称")
+    parser.add_argument("--model", default="deepseek-chat", help="LLM模型名称")
 
     args = parser.parse_args()
 
@@ -43,7 +43,7 @@ async def main():
         # 创建4个AI玩家
         players = []
         for i in range(4):
-            player_name = f"AI玩家{i+1}"
+            player_name = f"AI玩家{i + 1}"
             player = LLMPlayer(i, llm_client, player_name)
             players.append(player)
 
@@ -82,7 +82,7 @@ def create_demo_game():
         # 创建4个AI玩家
         players = []
         for i in range(4):
-            player = LLMPlayer(i, llm_client, f"演示玩家{i+1}")
+            player = LLMPlayer(i, llm_client, f"演示玩家{i + 1}")
             players.append(player)
 
         # 创建渲染器和游戏
